@@ -24,5 +24,8 @@ Create private page for single user registered on your site. Only the designed u
 2. Activate the plugin through the \'Plugins\' menu in WordPress
 
 == Changelog ==
-1.1 - Fix template bug for CPT
+1.1
+- Add new CPT icon 
+- Fix template bug
+
 1.0 - Plugin Creted
