@@ -1,0 +1,18 @@
+.wpsuc-btn {
+    padding: 8px 15px;
+    background-color: #111;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.wpsuc-btn:hover {
+    background-color: #dedede;
+}
+
+.wpsuc-main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
