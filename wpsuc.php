@@ -1,7 +1,9 @@
 <?php
 /*
 Plugin Name: Single User Content
+Plugin URI: https://github.com/maurodf0/wpsuc
 Author: Mauro De Falco
+Author URI: https://github.com/maurodf0
 Description: Create a private page for single user registered on your site. Only the designed user can see the post, fast, secure, free.
 Version: 1.1
 License: GPL v2 or later
