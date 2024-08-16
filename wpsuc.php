@@ -22,11 +22,11 @@ class wpsuc_SingleUserContent {
         add_action('add_meta_boxes', array($this, 'wpsuc_add_metaboxes'));
         add_action('save_post', array($this, 'wpsuc_save_metabox_field'));
         
-        // Flush permalinks quando il plugin viene attivato
+        // Flush permalinks when plugin is activated
         register_activation_hook(__FILE__, array($this, 'wpsuc_flush_rewrite_rules_on_activation'));
     }
 
-    // Registrazione del Custom Post Type
+    // Add CPT
     function wpsuc_add_cpt() {
         register_post_type('private-user-content',
             array(
@@ -51,16 +51,16 @@ class wpsuc_SingleUserContent {
                 ),
                 'public' => true,
                 'has_archive' => true,
-                'show_in_rest' => true, // Supporto per il blocco editor
-                'supports' => array('title', 'editor', 'custom-fields', 'thumbnail', 'excerpt', 'comments', 'revisions'), // Aggiungi il supporto per i campi personalizzati e altre funzionalità
-                'rewrite' => array('slug' => 'private-user-content'), // Personalizza lo slug del CPT
-                'menu_position' => 5, // Posizione nel menu di amministrazione
-                'menu_icon' => 'dashicons-admin-post', // Icona nel menu di amministrazione
+                'show_in_rest' => true, 
+                'supports' => array('title', 'editor', 'custom-fields', 'thumbnail', 'excerpt', 'comments', 'revisions'), 
+                'rewrite' => array('slug' => 'private-user-content'), 
+                'menu_position' => 5, 
+                'menu_icon' => 'dashicons-lock', 
             )
         );
     }
 
-    // Aggiunta dello stile
+    // Add Style
     function wpsuc_add_style() {
         //Load CSS only if is a private-user-content CPT
         if (is_singular('private-user-content')) {
@@ -69,14 +69,14 @@ class wpsuc_SingleUserContent {
         }
     }
 
-    // Sovrascrittura del template singolo per il CPT
+    // Override CPT single template
     function wpsuc_load_single_template($single) {
         global $post;
 
-        // Verifica se il post è del tipo private-user-content
+        // Verify is post type is private-user-content
         if ($post->post_type == 'private-user-content') {
-            // Percorso al file single-private-user-content.php nel plugin
-            $plugin_template = plugin_dir_path(__FILE__) . 'single-private-user-content.php';
+            // Find template file
+            $plugin_template = plugin_dir_path(__FILE__) . 'wpsuc-single-content.php';
 
             // Se il file esiste, sovrascrivi il template del tema
             if (file_exists($plugin_template)) {
@@ -87,19 +87,19 @@ class wpsuc_SingleUserContent {
         return $single;
     }
 
-    // Aggiunta della metabox per Private User Content
+    // Add Metabox
     function wpsuc_add_metaboxes() {
         add_meta_box(
             'single-user-content-metabox', // id
-            __('User for Private User Content', 'wpsuc'), // titolo
+            __('User for Private User Content', 'wpsuc'), // title
             array($this, 'wpsuc_metabox_content'), // callback
             'private-user-content', // post type
-            'normal', // posizione
-            'high' // priorità
+            'normal', // position
+            'high' // priority
         );
     }
 
-    // HTML per la metabox
+    // HTML for metabox
     function wpsuc_metabox_content() {
         global $post;
         // Use nonce for verification to secure data sending
@@ -141,7 +141,7 @@ class wpsuc_SingleUserContent {
             return $post_id;
         }
 
-        // Salvataggio dell'username
+        // Username Autosave
         if (isset($_POST['user'])) {
             $user_login = sanitize_text_field($_POST['user']);
             update_post_meta($post_id, 'username', $user_login);
@@ -149,7 +149,7 @@ class wpsuc_SingleUserContent {
         }
     }
 
-    // Funzione per flushare i permalinks all'attivazione del plugin
+    // Flush permalink
     function wpsuc_flush_rewrite_rules_on_activation() {
         // Registrazione del Custom Post Type
         $this->wpsuc_add_cpt();
